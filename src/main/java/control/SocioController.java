@@ -2,9 +2,10 @@ package control;
 
 import java.util.Scanner;
 
+import DAO.CategoriaDAO;
 import DAO.SocioDAO;
+import model.Categoria;
 import model.Socio;
-
 
 public class SocioController {
 
@@ -18,8 +19,8 @@ public class SocioController {
 			System.out.print(		
 				"\n1. Registra um socio" +
 				"\n2. Listar todas as socios" +
-				"\n3. Buscar socio pelo código" +
-				"\nOpção (Zero p/sair): ");
+				"\n3. Buscar socio pelo cï¿½digo" +
+				"\nOpï¿½ï¿½o (Zero p/sair): ");
 			opcao = input.nextInt();
 			input.nextLine();
 			switch(opcao) {
@@ -27,31 +28,33 @@ public class SocioController {
 					RegSocio();
 					break;
 				case 2:
-					selectSocio();
+					SelectSocio();
 					break;
 				case 3:
 					ConsSocio();
 					break;
 				default:
-					if(opcao != 0) System.out.println("Opção inválida.");
+					if(opcao != 0) System.out.println("Opï¿½ï¿½o invï¿½lida.");
 			}
 		} while(opcao != 0) ;	
 	}
 	
-	//opção 1
+	//opï¿½ï¿½o 1
 	private static void RegSocio() {
 		Socio Socio= new Socio();
-        System.out.println("\n++++++ Cadastro de Sócio ++++++");
+        System.out.println("\n++++++ Cadastro de Socio ++++++");
         System.out.print("\nDigite seu nome: ");
         Socio.setNome_socio(input.nextLine());
-        System.out.print("\nDigite o endereço:");
+        System.out.print("\nDigite o endereï¿½o:");
         Socio.setEnd_socio(input.nextLine());
         System.out.print("\nDigite o telefone:");
         Socio.setTel_socio(input.nextLine());
         System.out.print("\nDigite o email:");
         Socio.setEmail_socio(input.nextLine());
-        System.out.print("\nDigite a categoria:");
-        Socio.setDes_cat(input.nextLine());       
+        System.out.print("Digite o nome da categoria: ");
+        String des_cat = null;
+		Socio.setCategoria((Categoria) CategoriaDAO.selectCategoriaByDes(des_cat));
+		
         input.nextLine(); //limpa o input
         if(SocioDAO.RegSocio(Socio)) {
         	System.out.println("\nCategoria salvo com sucesso." + Socio.getCartao_socio());
@@ -60,20 +63,20 @@ public class SocioController {
         	System.out.println("\nHouve um erro ao salvar o Categoria. Por favor, contate o administrador do sistema.");
         }
     }
-	//opção 2
-	private static void selectSocio() {
-		System.out.println("\nLista de socios cadastrados no banco de dados:\n" + SocioDAO.selectSocio());
+	//opï¿½ï¿½o 2
+	private static void SelectSocio() {
+		System.out.println("\nLista de socios cadastrados no banco de dados:\n");
 	}
 	
-	//opção 3
+	//opï¿½ï¿½o 3
 	private static void ConsSocio() {
-		System.out.print("\nDigite o código do socio: ");
+		System.out.print("\nDigite o cï¿½digo do socio: ");
         Socio socio = SocioDAO.ConsSocio(input.nextLong());
         input.nextLine();
         if(socio != null){
             System.out.println(socio);
         }else{
-            System.out.println("Código não localizado.");
+            System.out.println("Cï¿½digo nï¿½o localizado.");
         }
 	}
 }//fim classe

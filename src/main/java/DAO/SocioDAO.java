@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocioDAO extends BaseDAO {
-	public static List<Socio> selectSocio() {
+	public static List<Socio> SelectSocio(final Long id_cat) {
 		final String sql = "SELECT * FROM socio ORDER BY nome_socio";
 		try //try-witch-resource
 		(
 			Connection conn = getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
 		){
+			pstmt.setLong(1,id_cat);
+			ResultSet rs = pstmt.executeQuery();
 			List<Socio> socio = new ArrayList<>();
 			while(rs.next()) {
 				socio.add(resultsetToSocio(rs));
@@ -26,7 +27,7 @@ public class SocioDAO extends BaseDAO {
 		}
 	}
     public static boolean RegSocio(Socio Socio){
-    	final String sql = "INSERT INTO socio (nome_socio, end_socio, tel_socio, email_socio, des_cat) VALUES (?, ?, ?, ?, ?);";
+    	final String sql = "INSERT INTO socio (nome_socio, end_socio, tel_socio, email_socio, id_cat) VALUES (?, ?, ?, ?, ?);";
 		try //try-witch-resource
 		(
 			Connection conn = getConnection();
@@ -37,7 +38,7 @@ public class SocioDAO extends BaseDAO {
             pstmt.setString(2, Socio.getEnd_socio());
             pstmt.setString(3, Socio.getTel_socio());
             pstmt.setString(4, Socio.getEmail_socio());
-            pstmt.setString(5, Socio.getDes_cat());
+            pstmt.setString(5, Socio.getCategoria().getDes_cat());
             int count = pstmt.executeUpdate();
 			return count > 0;
 		} catch(SQLException e) {
@@ -67,19 +68,22 @@ public class SocioDAO extends BaseDAO {
 		}
 	}
 	
-	//método utilitário, converte ResultSet na classe de modelo (nesse caso, Socio)
+	//mï¿½todo utilitï¿½rio, converte ResultSet na classe de modelo (nesse caso, Socio)
 	private static Socio resultsetToSocio(ResultSet rs) throws SQLException {
 		Socio s = new Socio();
 		s.setCartao_socio(rs.getLong("cartao_socio"));
 		s.setNome_socio(rs.getString("nome_socio"));
 		s.setEnd_socio(rs.getString("end_socio"));
+		s.setTel_socio(rs.getString("tel_socio"));
 		s.setEmail_socio(rs.getString("email_socio"));
-		s.setDes_cat(rs.getString("des_cat"));
+		s.setCategoria(CategoriaDAO.selectCategoriaById(rs.getLong("id_cat")));
 		return s;
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(SocioDAO.selectSocio());
 		
+		Socio socio = new Socio(1L,"Michele","BR 392 km 41", "1234", "michele@gmail.com",null);
+		
+		System.out.println(RegSocio(socio));		
 	}
 }

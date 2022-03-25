@@ -45,7 +45,7 @@ public class DependenteDAO extends BaseDAO {
 		}
 	}
     
-	//método utilitário, converte ResultSet na classe de modelo (nesse caso, Dependente)
+	//mï¿½todo utilitï¿½rio, converte ResultSet na classe de modelo (nesse caso, Dependente)
     private static Dependente resultsetToDependente(ResultSet rs) throws SQLException {
 		Dependente d = new Dependente();
 		d.setNome_dep(rs.getString("nome_dep"));

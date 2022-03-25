@@ -17,38 +17,38 @@ public class CategoriaController {
 			System.out.print(		
 				"\n1. Inserir nova categoria" +
 				"\n2. Listar todas as categorias" +
-				"\nOpÁ„o (Zero p/sair): ");
+				"\nOp√ß√£o (Zero p/sair): ");
 			opcao = input.nextInt();
 			input.nextLine();
 			switch(opcao) {
 				case 1:
-					inserir();
+					RegCat();
 					break;
 				case 2:
-					selectCategoria();
+					ConsCat();
 					break;
 				default:
-					if(opcao != 0) System.out.println("OpÁ„o inv·lida.");
+					if(opcao != 0) System.out.println("Op√ß√£o inv√°lida.");
 			}
 		} while(opcao != 0) ;	
 	}
 	
-	//opÁ„o 1
-	private static void inserir() {
+	//op√ß√£o 1
+	private static void RegCat() {
 		Categoria Categoria = new Categoria();
         System.out.println("\n++++++ Cadastro de novo Categoria ++++++");
-        System.out.print("\nDigite a descriÁ„o do Categoria: ");
+        System.out.print("\nDigite a descri√ß√£o do Categoria: ");
         Categoria.setDes_cat(input.nextLine());
         input.nextLine(); //limpa o input
-        if(CategoriaDAO.insertCategoria(Categoria)) {
+        if(CategoriaDAO.RegCat(Categoria)) {
         	System.out.println("\nCategoria salvo com sucesso." + Categoria.getDes_cat());
         }else {
         	System.out.println("\nHouve um erro ao salvar o Categoria. Por favor, contate o administrador do sistema.");
         }     
     }
 	
-	//opÁ„o 2
-	private static void selectCategoria() {
-		System.out.println("\nLista de Categorias cadastrados no banco de dados:\n" + CategoriaDAO.selectCategoria());
+	//op√ß√£o2
+	private static void ConsCat() {
+		System.out.println("\nLista de Categorias cadastrados no banco de dados:\n" + CategoriaDAO.ConsCat());
 	}
 }//fim classe

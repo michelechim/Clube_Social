@@ -7,7 +7,7 @@ public class Dependente {
 		private String email_dep;
 		private Long cartao_socio;
 		
-		/* Métodos construtores */
+		/* Mï¿½todos construtores */
 		public Dependente() {
 			super();
 		}
@@ -18,10 +18,10 @@ public class Dependente {
 			this.nome_dep = nome_dep;
 			this.parentesco = parentesco;
 			this.email_dep = email_dep;
-			this.setCartao_socio(cartao_socio);
+			this.cartao_socio = cartao_socio;
 		}
 		
-		/*Métodos acessores*/
+		/*Mï¿½todos acessores*/
 		public Long getCartao_dep() {
 			return cartao_dep;
 		}

@@ -17,7 +17,7 @@ public class DependenteController {
 			System.out.print(		
 				"\n1. Registra dependente" +
 				"\n2. Listar todos dependente" +
-				"\nOpção (Zero p/sair): ");
+				"\nOpï¿½ï¿½o (Zero p/sair): ");
 			opcao = input.nextInt();
 			input.nextLine();
 			switch(opcao) {
@@ -25,12 +25,12 @@ public class DependenteController {
 					RegDep();
 					break;
 				default:
-					if(opcao != 0) System.out.println("Opção inválida.");
+					if(opcao != 0) System.out.println("Opï¿½ï¿½o invï¿½lida.");
 			}
 		} while(opcao != 0) ;	
 	}
 	
-	//opção 1
+	//opï¿½ï¿½o 1
 	private static void RegDep() {
 		Dependente dependente= new Dependente();
         System.out.println("\n++++++ Cadastro de dependente ++++++");
@@ -40,7 +40,7 @@ public class DependenteController {
         dependente.setParentesco(input.nextLine());
         System.out.print("\nDigite o email:");
         dependente.setEmail_dep(input.nextLine());
-        System.out.print("\nDigite o nro do cartão de sócio:");
+        System.out.print("\nDigite o nro do cartï¿½o de sï¿½cio:");
         dependente.setCartao_socio(null);
         input.nextLine(); //limpa o inpu
 
