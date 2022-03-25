@@ -81,9 +81,7 @@ public class SocioDAO extends BaseDAO {
 	}
 	
 	public static void main(String[] args) {
-		
-		Socio socio = new Socio(1L,"Michele","BR 392 km 41", "1234", "michele@gmail.com",null);
-		
+		Socio socio = new Socio (1l,"michele","teste","teste","teste",CategoriaDAO.selectCategoriaById((long) 1));		
 		System.out.println(RegSocio(socio));		
 	}
 }
