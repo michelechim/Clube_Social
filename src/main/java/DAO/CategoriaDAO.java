@@ -39,7 +39,7 @@ public class CategoriaDAO extends BaseDAO {
 	}
 	
 	public static Categoria selectCategoriaById(Long id_cat) {
-		final String sql = "SELECT * FROM categoria WHERE id=?";
+		final String sql = "SELECT * FROM categoria WHERE id_cat=?";
 		try
 		(
 			Connection conn = getConnection();

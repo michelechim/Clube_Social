@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocioDAO extends BaseDAO {
+
 	public static List<Socio> SelectSocio(final Long id_cat) {
 		final String sql = "SELECT * FROM socio ORDER BY nome_socio";
 		try //try-witch-resource
@@ -38,7 +39,7 @@ public class SocioDAO extends BaseDAO {
             pstmt.setString(2, Socio.getEnd_socio());
             pstmt.setString(3, Socio.getTel_socio());
             pstmt.setString(4, Socio.getEmail_socio());
-            pstmt.setString(5, Socio.getCategoria().getDes_cat());
+            pstmt.setLong(5, Socio.getCategoria().getId_cat());
             int count = pstmt.executeUpdate();
 			return count > 0;
 		} catch(SQLException e) {
@@ -67,7 +68,48 @@ public class SocioDAO extends BaseDAO {
 			return null;
 		}
 	}
+    public static List<Socio> selectSocio() {
+		final String sql = "SELECT * FROM socio ORDER BY nome_socio";
+		try // try-witch-resource
+		(
+				Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+		)
+		{
+			List<Socio> socio = new ArrayList<>();
+			while (rs.next()) {
+				socio.add(resultsetToSocio(rs));
+			}
+			return socio;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
+    public static Socio selectSocioById(Long cartao_socio) {
+		final String sql = "SELECT * FROM socio WHERE cartao_socio=?";
+		try
+		(
+			Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+		)
+		{
+			pstmt.setLong(1,cartao_socio);	
+			ResultSet rs = pstmt.executeQuery();
+			Socio socio = null;
+			if(rs.next()) {
+				socio = resultsetToSocio(rs);
+			}
+			rs.close();
+			return socio;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+    
 	//m�todo utilit�rio, converte ResultSet na classe de modelo (nesse caso, Socio)
 	private static Socio resultsetToSocio(ResultSet rs) throws SQLException {
 		Socio s = new Socio();

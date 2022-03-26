@@ -65,7 +65,7 @@ public class SocioController {
     }
 	//op��o 2
 	private static void SelectSocio() {
-		System.out.println("\nLista de socios cadastrados no banco de dados:\n");
+		System.out.println("\nLista de socios cadastrados no banco de dados:\n" + SocioDAO.selectSocio());
 	}
 	
 	//op��o 3
