@@ -94,4 +94,9 @@ public class CategoriaDAO extends BaseDAO {
 		System.out.println(RegCat(categoria));
 	//	System.out.println(CategoriaDAO.RegCat(categoria));
 	}
+
+	public static List<Categoria> selectCategoriaByDes(boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

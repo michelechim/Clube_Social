@@ -9,6 +9,7 @@ public class Socio {
 	//private int id_cat;
 	private Categoria categoria;
 	
+	
 	// M�todos construtores
 	public Socio(){
 		super();
@@ -76,7 +77,7 @@ public class Socio {
 	@Override
 	public String toString() {
 		return "\nCartao:" + cartao_socio + 
-				"\nCategoria:" + categoria +
+				"\nCategoria:" + categoria.getDes_cat() +
 				"\nNome:" + nome_socio +  
 				"\nEndere�o= " + end_socio + 
 				"\nTelefone= " + tel_socio + 
