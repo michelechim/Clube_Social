@@ -3,7 +3,6 @@ package control;
 import java.util.Scanner;
 
 import DAO.DependenteDAO;
-import DAO.SocioDAO;
 import model.Dependente;
 
 public class DependenteController {
@@ -14,10 +13,11 @@ public class DependenteController {
 		
 		int opcao = 0;
 		do {
-			System.out.print("\n\"-------  MENU Dependente -------\"");
+			System.out.print("--- Dependente ---");
 			System.out.print(		
 				"\n1. Registra um dependente" +
 				"\n2. Listar todos os dependentes" +
+				"\n3. Volte a HOME" +
 				"\nOpção (Zero p/sair): ");
 			opcao = input.nextInt();
 			input.nextLine();
@@ -28,6 +28,8 @@ public class DependenteController {
 				case 2:
 					SelectDep();
 					break;
+				case 3:
+					HomeController.main(null);
 				default:
 					if(opcao != 0) System.out.println("Opção Inválida.");
 			}
@@ -38,16 +40,16 @@ public class DependenteController {
 	private static void RegDep() {
 		Dependente dependente = new Dependente();
 		System.out.println("\n++++++ Cadastro de dependente ++++++");
-        System.out.print("\nDigite seu nome: ");
+        System.out.print("Digite seu nome: ");
         dependente.setNome_dep(input.nextLine());
-        System.out.print("\nDigite o grau de parentesco:");
+        System.out.print("Digite o grau de parentesco:");
         dependente.setParentesco(input.nextLine());
-        System.out.print("\nDigite o email:");
+        System.out.print("Digite o email:");
         dependente.setEmail_dep(input.nextLine());
-        System.out.print("Digite o nro de cartao do socio ");
-        Long cartao_socio = null;
-		dependente.setSocio(SocioDAO.selectSocioById(cartao_socio));	
+        System.out.print("Digite o nro de cartao do socio: ");
+        dependente.setSocio(input.nextLine());
         input.nextLine(); //limpa o input
+       
         if(DependenteDAO.RegDep(dependente)) {
         	System.out.println("\nDependente salvo com sucesso." + dependente.getCartao_dep());
         	//nao esta pegando o dado de Cartao_socio.

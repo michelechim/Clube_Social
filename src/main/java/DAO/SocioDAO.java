@@ -8,52 +8,21 @@ import java.util.List;
 
 public class SocioDAO extends BaseDAO {
 
-	public static List<Socio> SelectSocio(final Long id_cat) {
-		final String sql = "SELECT * FROM socio ORDER BY nome_socio";
-		try // try-witch-resource
-		(Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			pstmt.setLong(1, id_cat);
-			ResultSet rs = pstmt.executeQuery();
-			List<Socio> socio = new ArrayList<>();
-			while (rs.next()) {
-				socio.add(resultsetToSocio(rs));
-			}
-			return socio;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	public static boolean RegSocio(Socio Socio) {
-		final String sql_socio = "INSERT INTO socio (nome_socio, end_socio, tel_socio, email_socio, id_cat) VALUES (?, ?, ?, ?, ?)";
-		final String sql_cat = "INSERT INTO categoria (des_cat) VALUES(?)";
-		try (Connection conn = getConnection();
-			 PreparedStatement pstmt_cat = conn.prepareStatement(sql_cat, Statement.RETURN_GENERATED_KEYS);
-			PreparedStatement pstmt_socio = conn.prepareStatement(sql_socio);) {
-			conn.setAutoCommit(false);
-			pstmt_socio.setString(1, Socio.getNome_socio());
-			pstmt_socio.setString(2, Socio.getEnd_socio());
-			pstmt_socio.setString(3, Socio.getTel_socio());
-			pstmt_socio.setString(4, Socio.getEmail_socio());
-			pstmt_socio.setLong(5, Socio.getCategoria().getId_cat());
-			int count = pstmt_socio.executeUpdate();
-			long id_cat = 0L;
-			if (count > 0) {
-				ResultSet rs = pstmt_socio.getGeneratedKeys();
-				if (rs.next()) {
-					id_cat = rs.getLong(1);
-				}
-				rs.close();
-				pstmt_cat.setLong(1, id_cat);
-				count = pstmt_cat.executeUpdate();
-			}
-			conn.commit();
-			conn.setAutoCommit(true);
+	public static boolean RegSocio(Socio socio) {
+		final String sql = "INSERT INTO socio (nome_socio, end_socio, tel_socio, email_socio, des_cat) "
+				+ "VALUES(?,?,?,?,?)";
+		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setString(1, socio.getNome_socio());
+			pstmt.setString(2, socio.getEnd_socio());
+			pstmt.setString(3, socio.getTel_socio());
+			pstmt.setString(4, socio.getEmail_socio());
+			pstmt.setString(5, socio.getDes_cat());
+			int count = pstmt.executeUpdate();
+			return count > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		return false;
 	}
 
 	public static Socio ConsSocio(Long cartao_socio) {
@@ -73,7 +42,24 @@ public class SocioDAO extends BaseDAO {
 			return null;
 		}
 	}
-	
+
+	public static List<Socio> ListaSocio() {
+		final String sql = "SELECT * FROM socio ORDER BY nome_socio";
+		try // try-witch-resource
+		(Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+			List<Socio> socio = new ArrayList<>();
+			while (rs.next()) {
+				socio.add(resultsetToSocio(rs));
+			}
+			return socio;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static Socio selectSocioById(Long cartao_socio) {
 		final String sql = "SELECT * FROM socio WHERE cartao_socio=?";
 		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -100,12 +86,12 @@ public class SocioDAO extends BaseDAO {
 		s.setEnd_socio(rs.getString("end_socio"));
 		s.setTel_socio(rs.getString("tel_socio"));
 		s.setEmail_socio(rs.getString("email_socio"));
-		s.setCategoria(CategoriaDAO.selectCategoriaById(rs.getLong("id_cat")));
+		s.setDes_cat(rs.getString("des_cat"));
 		return s;
 	}
 
 	public static void main(String[] args) {
-		Socio socio = new Socio(1l, "michele", "teste", "teste", "teste",CategoriaDAO.selectCategoriaById((long) 1));
+		Socio socio = new Socio(1l, "michele", "teste", "teste", "teste", "atual");
 		System.out.println(RegSocio(socio));
 	}
 }

@@ -6,24 +6,22 @@ public class Socio {
 	private String end_socio;
 	private String tel_socio;
 	private String email_socio;
-	//private int id_cat;
-	private Categoria categoria;
-	
-	
+	private String des_cat;
+
 	// M�todos construtores
-	public Socio(){
+	public Socio() {
 		super();
 	}
-	
+
 	// Construtor parametrizado
-	public Socio(Long cartao_socio, String nome_socio, String end_socio, String tel_socio, 
-			String email_socio, Categoria categoria){
+	public Socio(Long cartao_socio, String nome_socio, String end_socio, String tel_socio, String email_socio,
+			String des_cat) {
 		this.cartao_socio = cartao_socio;
 		this.nome_socio = nome_socio;
 		this.end_socio = end_socio;
 		this.tel_socio = tel_socio;
 		this.email_socio = email_socio;
-		this.categoria = categoria;
+		this.des_cat = des_cat;
 	}
 
 	public Long getCartao_socio() {
@@ -65,22 +63,18 @@ public class Socio {
 	public void setEmail_socio(String email_socio) {
 		this.email_socio = email_socio;
 	}
-	
-	public Categoria getCategoria() {
-		return categoria;
+
+	public String getDes_cat() {
+		return des_cat;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setDes_cat(String des_cat) {
+		this.des_cat = des_cat;
 	}
 
 	@Override
 	public String toString() {
-		return "\nCartao:" + cartao_socio + 
-				"\nCategoria:" + categoria.getDes_cat() +
-				"\nNome:" + nome_socio +  
-				"\nEndere�o= " + end_socio + 
-				"\nTelefone= " + tel_socio + 
-				"\nEmail:" + email_socio + "\n";
+		return "\nCartao:" + cartao_socio + "		Nome:" + nome_socio + "\nEndereço= " + end_socio
+				+ "		Telefone= " + tel_socio + "\nEmail:" + email_socio + "		Categoria:" + des_cat + "\n";
 	}
 }

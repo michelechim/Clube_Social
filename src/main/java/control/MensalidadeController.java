@@ -11,11 +11,13 @@ public class MensalidadeController{
 	public static void main(String[] args) {
 		int opcao = 0;
 		do {
-			System.out.println("\n*** Menu - Mensalidade ***\n"
-					+ "\n1. Consulta"
-					+ "\n2. Busca situacao"
-					+ "\n3. Calcula Juros"
-					+ "\nOpção (Zero p/ sair):");
+			System.out.println("--- Mensalidade ---");
+			System.out.print(
+					"\n1. Consulta" + 
+					"\n2. Lista" + 
+					"\n3. Calcula Juros" +
+					"\n4. Volte a HOME" +
+					"\nOpção (Zero p/ sair):");
 			opcao = input.nextInt();
 			input.nextLine();
 			switch(opcao) {
@@ -24,6 +26,11 @@ public class MensalidadeController{
 					break;
 				case 2:
 					SelectMensalidade();
+					break;
+				case 3:
+					break;
+				case 4:
+					HomeController.main(null);
 					break;
 				default:
 					if(opcao != 0 ) System.out.println("Opção inválida!");
@@ -46,4 +53,6 @@ public class MensalidadeController{
 	private static void SelectMensalidade() {
 		System.out.println("\nLista das mensalidades:\n" + MensalidadeDAO.SelectMensalidade());
 	}
+	
+	//opcao 3 == CalcJuros
 }
